@@ -10,7 +10,9 @@ by Esteban Cabello, María Dolores Esteban, Domingo Morales, and Agustín Pérez
 
 ## 📄 Overview
 
-The TBFH-VAR1 model extends the classical Fay-Herriot framework to a bivariate and temporal setting, introducing correlated time effects through a VAR(1) structure at the domain level. 
+The TBFH-VAR1 model is a generalization of the bivariate Fay-Herriot model proposed by Benavent and Morales (2021). 
+It introduces a temporal dimension by modelling domain-level random effects with a first order vector autoregressive correlation structure. 
+This allows the model to capture target variable correlations and domain-level random effects autocorrelation, leading to improved precision and stability in small area estimates from longitudinal surveys.
 
 This repository includes:
 
