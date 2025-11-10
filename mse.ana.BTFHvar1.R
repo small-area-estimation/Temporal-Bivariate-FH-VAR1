@@ -15,7 +15,7 @@ library(sae)
 library(dplyr)
 library(vctrs)
 
-mse.BTFHvar1 <- function(X, Sigma, F.inv, Ved){
+mse.ana.BTFHvar1 <- function(X, Sigma, F.inv, Ved){
 
   # X: Design matrix. Matrix.
   # Sigma: Variance components. Vector.
