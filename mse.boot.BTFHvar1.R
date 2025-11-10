@@ -1,18 +1,21 @@
 ###############################################################################
-###############################################################################
-###
-###       Fecha de creación: 04/03/2025
-###                                                  
-###       Ultima modificación: 05/03/2025
+###############################################################################                                               
+###       Parametric Bootstrap estimator of the MSE matrix 
 ###       
-###       Autor: Esteban Cabello García, Agustín Pérez, Lola Esteban
+###       Autor: Esteban Cabello García
 ###
-###       Trabajo: BTFH-var1 - Bootstrap
+###       Work: BTFH-var1 
 
 
-mse.BTFHvar1.boot <- function(X, D, tp, beta, sigma, Ve, Bsize, k){
+mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
   
-  ### Bsize: vector con nº iteraciones bootstrap
+  ### X: design matrix
+  ### D: number of domains. Integer.
+  ### tp: number of time periods. Integer.
+  ### beta: Regression parameters. Vector.
+  ### sigma: Sigma estimates. Vector
+  ### Ve: Variances-covariances of the sampling errors. List.
+  ### Bsize: bootstrap iterations. Vector.
   
   B.last <- tail(Bsize, 1)
   
@@ -59,9 +62,9 @@ mse.BTFHvar1.boot <- function(X, D, tp, beta, sigma, Ve, Bsize, k){
   
   Vedt <- Ve[[1]]
   
-  mu.ast <- mu.ast.hat <- eblup.ast.hat <- blup.ast.hat <- matrix(0, ncol = B.last, nrow = 2*D*tp)
-  mse1.boot <- mean.deltaEB.square <- mean.g1g2.boot <- as.data.frame(matrix(0, ncol = length(Bsize), nrow = 2*D*tp))
-  dif.mu.blup <- dif.mu.eblup <- dif.mu.eblup.blup <- sum.g1g2.boot <- 0
+  mu.ast <- mu.ast.hat <- eblup.ast.hat <- matrix(0, ncol = B.last, nrow = 2*D*tp)
+  mse1.boot <- as.data.frame(matrix(0, ncol = length(Bsize), nrow = 2*D*tp))
+  dif.mu.eblup <- 0
   
   b <- 0
   BadTot_b <- BadTot_2 <- 0
@@ -76,9 +79,7 @@ mse.BTFHvar1.boot <- function(X, D, tp, beta, sigma, Ve, Bsize, k){
     
     
     #################
-    #################
     #### Generation of target variables y_{dt}
-    ################
     ################
     
     u1.ast <- matrix(t(u1d.ast), ncol = 1, byrow = T)
@@ -87,7 +88,7 @@ mse.BTFHvar1.boot <- function(X, D, tp, beta, sigma, Ve, Bsize, k){
     
     mu.ast[,b] <- as.matrix(X%*%beta.hat+ Z1%*%u1.ast + Z2%*%u2.ast)
     y.ast <- mu.ast[,b] + e.ast
-    ty.ast <- t(y.ast)
+
     
     
     fit.boot <- try(REML.BTFHvar1_opt(X, y.ast, sigma.ini = sigma.hat, Ve = Ve, PRECISION = 10^-3, MAXITER = 60), TRUE)
@@ -95,13 +96,11 @@ mse.BTFHvar1.boot <- function(X, D, tp, beta, sigma, Ve, Bsize, k){
     
     if(inherits(fit.boot,"try-error")){
       BadTot_2 <- BadTot_2 + 1
-      # excepcion <- c(excepcion, b)
-      write.table(data.frame(class(fit.boot), D, k, b), file=paste0("Results/WARNING_BOOTSTRAP B=", B.last, ".txt"), append=TRUE, col.names=FALSE, row.names=FALSE)
-      cat("\t Muestra_bootstrap", b, " rechazada por try-error\n")
+      cat("\t Bootstrap_sample", b, " rejected by try-error\n")
       b <- b-1
     }
     else {
-      cat("Iteration", k, ".Fitting Bootstrap sample number", b, "\n")
+      cat("Fitting Bootstrap sample number", b, "\n")
       
 
       sigma.ast.hat <- fit.boot$Sigma
@@ -111,32 +110,25 @@ mse.BTFHvar1.boot <- function(X, D, tp, beta, sigma, Ve, Bsize, k){
       
       eblup.ast.hat[,b] <- fit.BTFHvar1(X, y.ast, D, tp, sigma = sigma.ast.hat, beta = beta.ast.hat, V.inv = V.inv.ast.hat, F.inv = F.inv.ast.hat)$Eblups
       blup.ast.hat[,b] <- fit.blup.BTFHvar1(X, y.ast, D, tp, sigma = sigma.hat, beta = beta.hat, Ve = Ve)$Blups
-        
-      mse.ana.boot <- mse.ana.BTFHvar1(X, sigma.ast.hat, F.inv.ast.hat, Ved)
-      
-      sum.g1g2.boot <- sum.g1g2.boot + (mse.ana.boot$G1 + mse.ana.boot$G2)
+              
 
-      dif.mu.blup <- dif.mu.blup + (blup.ast.hat[,b] - mu.ast[,b])^2
       dif.mu.eblup <- dif.mu.eblup + (eblup.ast.hat[,b] - mu.ast[,b])^2
-      dif.mu.eblup.blup <- dif.mu.eblup.blup + (eblup.ast.hat[,b] - blup.ast.hat[,b])^2
-      
+
     }
     
     if(any(Bsize == b)){
       
       indx.B <- which(Bsize == b)
       mse1.boot[,indx.B] <- dif.mu.eblup/b
-      mean.deltaEB.square[,indx.B] <- dif.mu.eblup.blup/b
-      mean.g1g2.boot <- sum.g1g2.boot/b
-      
 
+    
     }
     
   }
   
   colnames(mse1.boot) <- colnames(mean.deltaEB.square) <- colnames(mean.g1g2.boot) <- paste0("B=",as.character(Bsize))
   
-  #cat("Fitting of Bootstrap sample", b, "in iteration i =",i, " finished \n")
+
   return(list(mse1.boot = mse1.boot, deltaEB.2 = mean.deltaEB.square, g1g2.boot = mean.g1g2.boot, BadTot_2))
   
 }
