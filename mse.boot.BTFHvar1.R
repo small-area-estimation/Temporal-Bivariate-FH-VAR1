@@ -109,8 +109,7 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
       F.inv.ast.hat <- fit.boot$Fisher.inv
       
       eblup.ast.hat[,b] <- fit.BTFHvar1(X, y.ast, D, tp, sigma = sigma.ast.hat, beta = beta.ast.hat, V.inv = V.inv.ast.hat, F.inv = F.inv.ast.hat)$Eblups
-      blup.ast.hat[,b] <- fit.blup.BTFHvar1(X, y.ast, D, tp, sigma = sigma.hat, beta = beta.hat, Ve = Ve)$Blups
-              
+        
 
       dif.mu.eblup <- dif.mu.eblup + (eblup.ast.hat[,b] - mu.ast[,b])^2
 
