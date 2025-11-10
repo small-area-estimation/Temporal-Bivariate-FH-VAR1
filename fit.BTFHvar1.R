@@ -4,10 +4,11 @@
 ###       EBLUPs and Tables of the Regression and variance parameters  
 ###
 ###       Autor: Esteban Cabello García
+###
 ###       Work: TBFH-var1
 
 
-fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv){
+fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv, conf.level = 0.95){
   
   ### X: Design matrix
   ### y: Target variables. Column Vector.
@@ -17,6 +18,7 @@ fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv){
   ### beta: Regression parameters. Vector
   ### V.inv: inverse of V = V_u + V_e. Matrix.
   ### F.inv: inverse of the information Fisher. Matrix.
+  ### conf.level: confidence level. Numeric.
   
   tX <- t(X)
   col1 <- matrix(1,nrow = tp)
@@ -43,12 +45,12 @@ fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv){
   muE <- X %*% beta + Z1 %*% u1E + Z2 %*% u2E
   
   ########## Table for sigma ########
-  alpha <- 0.05
+  alpha <- 1-conf.level
   se.theta <- sqrt(diag(F.inv))
   t.val <- sigma/se.theta
   pv <- 2 * pnorm(as.vector(abs(t.val)), lower.tail = FALSE)
-  lim.inf <- sigma-qnorm(1-0.05/2)*se.theta 
-  lim.sup <- sigma+qnorm(1-0.05/2)*se.theta 
+  lim.inf <- sigma-qnorm(1-alpha/2)*se.theta 
+  lim.sup <- sigma+qnorm(1-alpha/2)*se.theta 
   coefsigma <- cbind(sigma, se.theta, t.val, lim.inf,lim.sup,pv)
   
   colnames(coefsigma) = c("Variances", "std.error", "t.statistics", "lim.inf","lim.sup",
@@ -60,8 +62,8 @@ fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv){
   se.b <- sqrt(diag(Q.inv))
   t.val <- beta/se.b
   pv <- 2 * pnorm(as.vector(abs(t.val)), lower.tail = FALSE)
-  lim.inf <- beta - qnorm(1-0.05/2)*se.b
-  lim.sup <- beta + qnorm(1-0.05/2)*se.b
+  lim.inf <- beta - qnorm(1-alpha/2)*se.b
+  lim.sup <- beta + qnorm(1-alpha/2)*se.b
   coefbeta <- cbind(beta, se.b, t.val, lim.inf, lim.sup, pv)
   colnames(coefbeta) = c("beta", "std.error", "t.statistics", "lim.inf", "lim.sup",
                          "p.value")
