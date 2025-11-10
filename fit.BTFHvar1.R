@@ -1,26 +1,22 @@
 ###############################################################################
 ###############################################################################
 ###
-###       BTFH-var1 - EBLUPs, beta and sigma tables (p-value, CI and std.error) 
+###       EBLUPs and Tables of the Regression and variance parameters  
 ###
-###       Fecha de creación: 01/12/2023
-###                                                  
-###       Ultima modificación: 24/02/2025
-###       
 ###       Autor: Esteban Cabello García
-###
+###       Work: TBFH-var1
 
 
 fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv){
   
-  ### X: design matrix
-  ### y: column vector of the target variables
-  ### D: number of domains
-  ### tp: number of subdomains (period of time)
-  ### sigma: vector of sigma estimates
-  ### beta: vector of beta estimates
-  ### V.inv: inverse of V = V_u + V_e
-  ### F.inv: inverse of the information Fisher matrix
+  ### X: Design matrix
+  ### y: Target variables. Column Vector.
+  ### D: domains. Integer.
+  ### tp: time periods. Integer.
+  ### sigma: Variance components estimates. Vector.
+  ### beta: Regression parameters. Vector
+  ### V.inv: inverse of V = V_u + V_e. Matrix.
+  ### F.inv: inverse of the information Fisher. Matrix.
   
   tX <- t(X)
   col1 <- matrix(1,nrow = tp)
