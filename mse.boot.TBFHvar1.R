@@ -64,7 +64,7 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
   
   mu.ast <- mu.ast.hat <- eblup.ast.hat <- matrix(0, ncol = B.last, nrow = 2*D*tp)
   mse.eblup.boot <- mse.dir.boot <- as.data.frame(matrix(0, ncol = length(Bsize), nrow = 2*D*tp))
-  dif.mu.eblup <- 0
+  dif.mu.eblup <- dif.mu.dir <- 0
   
   b <- 0
   BadTot_b <- BadTot_2 <- 0
