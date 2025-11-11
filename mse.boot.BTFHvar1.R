@@ -2,9 +2,9 @@
 ###############################################################################                                               
 ###       Parametric Bootstrap estimator of the MSE matrix 
 ###       
-###       Autor: Esteban Cabello García
+###       Author: Esteban Cabello García
 ###
-###       Work: BTFH-var1 
+###       Work: TBFH-var1 
 
 
 mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
