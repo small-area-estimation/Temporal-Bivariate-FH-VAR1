@@ -5,7 +5,7 @@
 ###
 ###       Author: Esteban Cabello García
 ###
-###       Work: BTFH-var1
+###       Work: TBFH-var1
 
 library(expm)
 library(diagonals)
