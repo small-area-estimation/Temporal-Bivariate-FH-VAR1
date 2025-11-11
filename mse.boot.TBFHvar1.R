@@ -126,7 +126,7 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
     
   }
   
-  colnames(mse1.boot) <- colnames(mean.deltaEB.square) <- colnames(mean.g1g2.boot) <- paste0("B=",as.character(Bsize))
+  colnames(mse.eblup.boot) <- colnames(mse.dir.boot) <- paste0("B=",as.character(Bsize))
   
 
   return(list(mse.eblup.boot = mse.eblup.boot, mse.dir.boot = mse.dir.boot, BadTot_2))
