@@ -85,9 +85,6 @@ REML.BTFHvar1 <- function(X, y, sigma.ini, Ve, PRECISION = 0.0001, MAXITER = 40)
 
     kit <- kit + 1
     
-    #print(kit)
-    #print(sigmau1)
-    
     V1d <- matrix(c(sigmau1[1,],sigmau1[3,]*sqrt(sigmau1[1,]*sigmau1[2,]),sigmau1[3,]*sqrt(sigmau1[1,]*sigmau1[2,]),sigmau1[2,]), byrow = T, nrow = 2)
     
     Phi <- diag(c(sigmau1[7,],sigmau1[8,]))
