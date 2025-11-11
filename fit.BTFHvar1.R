@@ -3,7 +3,7 @@
 ###
 ###       EBLUPs and Tables of the Regression and variance parameters  
 ###
-###       Autor: Esteban Cabello García
+###       Author: Esteban Cabello García
 ###
 ###       Work: TBFH-var1
 
