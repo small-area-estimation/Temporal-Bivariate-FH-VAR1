@@ -46,7 +46,7 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
                    rho2.hat*sqrt(sigma3.hat*sigma4.hat)/(1-phi1.hat*phi2.hat), 
                    sigma4.hat/(1-phi2.hat^2) ), nrow = 2, byrow = T)
   
-  V2d.hat <- V2d_f_opt(V = V2dt.hat,tp = tp, Phi = Phi.hat)
+  V2d.hat <- V2d_f(V = V2dt.hat,tp = tp, Phi = Phi.hat)
   
   
   Z1 <-  Reduce(bdiag,rep(list(Reduce(rbind,rep(list(diag(2)),tp))),D))
