@@ -124,7 +124,7 @@ mse.ana.BTFHvar1 <- function(X, Sigma, F.inv, Ved){
   mse <- diag(G1 + G2 + 2*G3)
   mse <- matrix(mse, ncol = 2, byrow = T)
   
-  return(list(G1 = G1, G2 = G2, G3 = 2*G3, mse.ana = mse))
+  return(list(G1 = G1, G2 = G2, G3 = 2*G3, mse = mse))
   
 }
 
