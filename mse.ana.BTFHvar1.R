@@ -2,9 +2,9 @@
 ###############################################################################                                               
 ###       Analytical approximation of the MSE matrix 
 ###       
-###       Autor: Esteban Cabello García
+###       Author: Esteban Cabello García
 ###
-###       Work: BTFH-var1 
+###       Work: TBFH-var1 
 
 library(pracma)
 library(mvtnorm)
