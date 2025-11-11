@@ -91,7 +91,7 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
 
     
     
-    fit.boot <- try(REML.BTFHvar1_opt(X, y.ast, sigma.ini = sigma.hat, Ve = Ve, PRECISION = 10^-3, MAXITER = 60), TRUE)
+    fit.boot <- try(REML.BTFHvar1(X, y.ast, sigma.ini = sigma.hat, Ve = Ve, PRECISION = 10^-3, MAXITER = 60), TRUE)
     
     
     if(inherits(fit.boot,"try-error")){
