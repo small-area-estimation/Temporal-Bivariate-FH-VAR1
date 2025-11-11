@@ -53,7 +53,7 @@ fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv, conf.level = 0.
   lim.sup <- sigma+qnorm(1-alpha/2)*se.theta 
   coefsigma <- cbind(sigma, se.theta, t.val, lim.inf,lim.sup,pv)
   
-  colnames(coefsigma) = c("Variances", "std.error", "t.statistics", "lim.inf","lim.sup",
+  colnames(coefsigma) = c("sigma.hat", "std.error", "t.statistics", "lim.inf","lim.sup",
                           "p.value")
   
   ## Table for beta
@@ -65,7 +65,7 @@ fit.BTFHvar1 <- function(X, y, D, tp, sigma, beta, V.inv, F.inv, conf.level = 0.
   lim.inf <- beta - qnorm(1-alpha/2)*se.b
   lim.sup <- beta + qnorm(1-alpha/2)*se.b
   coefbeta <- cbind(beta, se.b, t.val, lim.inf, lim.sup, pv)
-  colnames(coefbeta) = c("beta", "std.error", "t.statistics", "lim.inf", "lim.sup",
+  colnames(coefbeta) = c("beta.hat", "std.error", "t.statistics", "lim.inf", "lim.sup",
                          "p.value")
   
   return(list(sigma = coefsigma, beta = coefbeta, Eblups = muE, Q.inv = Q.inv))
