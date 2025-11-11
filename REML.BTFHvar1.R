@@ -1,19 +1,17 @@
 ###############################################################################
 ###############################################################################
 ###
-###       Fecha de creación: 02/10/2023
-###                                                  
-###       Ultima modificación: 02/10/2023
-###       
-###       Autor: Esteban Cabello García
+###       REML Fisher-scoring fitting algorithm
 ###
-###       Trabajo: BTFH-var1 - REML
+###       Author: Esteban Cabello García
+###
+###       Work: BTFH-var1
 
 library(expm)
 library(diagonals)
 library(dplyr)
 
-V2d_f <- function(V,tp,Phi){
+V2d_f <- function(V, tp, Phi){
   V2d_elem<- list() 
   cindx <- merge(1:tp, 1:tp)
   for(k in 1:dim(cindx)[1]){ ## We calculete each cov(u_t1,u_t2) and cov(u_t2,u_t1)
@@ -33,7 +31,7 @@ V2d_f <- function(V,tp,Phi){
   return(V2d)
 }
 
-V2da_78f <- function(V,V2dt,tp,Phi,Phi78){
+V2da_78f <- function(V, V2dt, tp, Phi, Phi78){
   V2d_elem<- list() 
   cindx <- merge(1:tp, 1:tp)
   for(k in 1:dim(cindx)[1]){ ## We calculete each cov(u_t1,u_t2) and cov(u_t2,u_t1)
@@ -54,14 +52,15 @@ V2da_78f <- function(V,V2dt,tp,Phi,Phi78){
   return(V2d)
 }
 
-## X = agregated data X (matrix form)
-## ydi = target variable (matrix)
-## sigma.ini = initial values for sigma (theta parameters)
-## Ve = sampling variance diag(1<d<D,diag(1<t<T)) LIST
 
 
-REML.BTFHvar1 <- function(X,y, sigma.ini, Ve, PRECISION = 0.0001, MAXITER = 40){
-  
+REML.BTFHvar1 <- function(X, y, sigma.ini, Ve, PRECISION = 0.0001, MAXITER = 40){
+
+## X = Design matrix.
+## y = Target variables. Column vector.
+## sigma.ini = Initial values for the variance components. Vector.
+## Ve = Sampling variance-covariance matrix. List of matrices.
+
   kit <- 0
   FLAG <- 0
   diff <- rep(PRECISION + 1, 8)
@@ -183,7 +182,7 @@ REML.BTFHvar1 <- function(X,y, sigma.ini, Ve, PRECISION = 0.0001, MAXITER = 40){
       
       if(any(sigmau[c(1,2,4,5),] < 0) | any(abs(sigmau[c(3,6,7,8),]) > 1)){
         warning("Out of parametric space")
-        # stop("Out of parametric space")
+        FLAG <- 1
         break
       }
       
@@ -200,9 +199,7 @@ REML.BTFHvar1 <- function(X,y, sigma.ini, Ve, PRECISION = 0.0001, MAXITER = 40){
       
       sigmau1 <- sigmau
       betaREML <- as.matrix(solve(tX%*%V.inv%*%X)%*%tX%*%V.inv%*%y)
-      
-      
-      
+           
       
     }
     
