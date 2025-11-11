@@ -63,7 +63,7 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
   Vedt <- Ve[[1]]
   
   mu.ast <- mu.ast.hat <- eblup.ast.hat <- matrix(0, ncol = B.last, nrow = 2*D*tp)
-  mse1.boot <- as.data.frame(matrix(0, ncol = length(Bsize), nrow = 2*D*tp))
+  mse.eblup.boot <- mse.dir.boot <- as.data.frame(matrix(0, ncol = length(Bsize), nrow = 2*D*tp))
   dif.mu.eblup <- 0
   
   b <- 0
@@ -110,15 +110,17 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
       
       eblup.ast.hat[,b] <- as.numeric(fit.BTFHvar1(X, y.ast, D, tp, sigma = sigma.ast.hat, beta = beta.ast.hat, V.inv = V.inv.ast.hat, F.inv = F.inv.ast.hat)$Eblups)
         
-      dif.mu.eblup <- dif.mu.eblup + (eblup.ast.hat[,b] - mu.ast[,b])^2
 
+      dif.mu.eblup <- dif.mu.eblup + (eblup.ast.hat[,b] - mu.ast[,b])^2
+      dif.mu.dir <- dif.mu.dir + (y.ast - mu.ast[,b])^2
+      
     }
     
     if(any(Bsize == b)){
       
       indx.B <- which(Bsize == b)
-      mse1.boot[,indx.B] <- dif.mu.eblup/b
-
+      mse.eblup.boot[,indx.B] <- dif.mu.eblup/b
+      mse.dir.boot[,indx.B] <- dif.mu.dir/b
     
     }
     
@@ -127,6 +129,6 @@ mse.boot.BTFHvar1 <- function(X, D, tp, beta, sigma, Ve, Bsize){
   colnames(mse1.boot) <- colnames(mean.deltaEB.square) <- colnames(mean.g1g2.boot) <- paste0("B=",as.character(Bsize))
   
 
-  return(list(mse1.boot = mse1.boot, deltaEB.2 = mean.deltaEB.square, g1g2.boot = mean.g1g2.boot, BadTot_2))
+  return(list(mse.eblup.boot = mse.eblup.boot, mse.dir.boot = mse.dir.boot, BadTot_2))
   
 }
