@@ -2,9 +2,7 @@
 
 This repository contains R codes for the paper:
 
-**"Small Area Estimation of Poverty Indicators under a Temporal Bivariate Fay-Herriot Model with Correlated Time Effects"**
-
-by Esteban Cabello, María Dolores Esteban, Domingo Morales, and Agustín Pérez.
+> **Cabello, E., Esteban, M.D., Morales, D. et al. Small area estimation of poverty indicators under bivariate Fay–Herriot model with correlated time effects. *AStA Adv Stat Anal (2025)*. [https://doi.org/10.1007/s10182-025-00550-5](https://doi.org/10.1007/s10182-025-00550-5)**
 
 ---
 
