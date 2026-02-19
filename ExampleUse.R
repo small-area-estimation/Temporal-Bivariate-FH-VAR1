@@ -63,7 +63,7 @@ formula <- list(f1 = Y1 ~ X1,
 X1 <- model.matrix(formula[[1]], df)
 X2 <- model.matrix(formula[[2]], df)
 
-x.matrix <- do.call(rbind, lapply(1:nrow(a1), function(i) {
+x.matrix <- do.call(rbind, lapply(1:nrow(X1), function(i) {
   as.matrix(Matrix::bdiag(X1[i, , drop = FALSE], X2[i, , drop = FALSE]))
 }))
 
