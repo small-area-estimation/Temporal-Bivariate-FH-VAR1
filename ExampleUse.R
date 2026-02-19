@@ -88,12 +88,12 @@ fitted$beta
 head(fitted$Eblups)
 
 ### MSE estimation
-mse.ana <- mse.ana.BTFHvar1(X = x.matrix, Sigma = sigma.hat, F.inv = Fish.inv, Ve)
+mse.ana <- mse.ana.BTFHvar1(X = x.matrix, Sigma = sigma.hat, F.inv = Fish.inv, Ved)
 mse.ana.y1 <- mse.ana$mse[,1]
 mse.ana.y2 <- mse.ana$mse[,2]
 
 ### The procedure can be slow. Be patient :)
-mse.boot <- mse.boot.BTFHvar1(X = x.matrix, D, tp, beta.hat, sigma.hat, Ve, Bsize = c(10,50))
+mse.boot <- mse.boot.BTFHvar1(X = x.matrix, D, tp, beta.hat, sigma.hat, Ved, Bsize = c(10,50))
 mse.boot.eblup <- mse.boot$mse.eblup.boot
 mse.boot.dir <- mse.boot$mse.dir.boot
 
